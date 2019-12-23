@@ -1,0 +1,31 @@
+#+TITLE: HTab - Helm interface for Emacs tab-bar
+
+Emacs 27 now has built-in support for tabs.  There is a built-in way to switch between tabs using `tab-switcher`.  This library instead uses helm to switch tabs.  Features quick switching, and creating new named tabs just by typing the new name.  Also supports predefined layouts.
+
+* Display selector
+Bind or call `htab-pick-by-name` to open the switcher.  You can add a new named tab, or switch to one you've created already.
+
+[[file:simple.png]]
+* Delete a tab
+Use `C-d` over the tab, or select the helm action with the `tab` key.
+* Rename a tab
+Use `C-r` over the tab, or select the helm action with the `tab` key.
+* Predefined layouts
+After creating the same tab multiple times, you may want to automate.  Programmaticly this can be done via `htab-create-predefined-layout`.
+
+[[file:with-layouts.png]]
+
+#+BEGIN_SRC emacs-lisp
+  (htab-create-predefined-layout "tasks"
+    (let ((first-window (get-buffer-window)))
+      (find-file "~/Documents/org/time-sheet.org")
+      (split-window-below)
+      (windmove-down)
+
+      (find-file "~/Documents/org/tasks.org")
+      (split-window-right)
+      (windmove-right)
+
+      (find-file "~/Documents/journal")
+      (select-window first-window)))
+#+END_SRC
